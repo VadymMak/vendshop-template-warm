@@ -41,7 +41,7 @@
   font-size: var(--font-size-lg);
   font-weight: 700;
   flex-shrink: 0;
-  font-family: var(--heading-font, 'Oswald', sans-serif);
+  font-family: var(--heading-font);
 }
 
 .name {
