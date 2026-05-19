@@ -74,9 +74,14 @@ export default function Footer() {
         <div className="container">
           <span>© {year} {SITE_CONFIG.name}. {ui.footer.rights}</span>
           <div className={styles.bottomLinks}>
-            <a href="#">{ui.footer.privacy}</a>
-            <a href="#">{ui.footer.cookies}</a>
-            <button className={styles.cookieSettingsBtn} onClick={() => window.dispatchEvent(new Event('open-cookie-banner'))}>{ui.cookie.settings}</button>
+            <a href="/datenschutz">{ui.footer.privacy}</a>
+            <a href="/impressum">{ui.footer.impressum ?? 'Impressum'}</a>
+            <button
+              className={styles.cookieSettingsBtn}
+              onClick={() => window.dispatchEvent(new Event('open-cookie-banner'))}
+            >
+              {ui.cookie.settings}
+            </button>
           </div>
         </div>
       </div>

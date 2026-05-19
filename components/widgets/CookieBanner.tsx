@@ -17,23 +17,46 @@ function setCookie(name: string, value: string, days: number) {
   document.cookie = name + "=" + encodeURIComponent(value) + ";expires=" + expires.toUTCString() + ";path=/;SameSite=Lax";
 }
 
-interface CookieBannerProps { message: string; accept: string; reject: string; learnMore: string; settings: string; }
+interface CookieBannerProps {
+  message: string;
+  accept: string;
+  reject: string;
+  learnMore: string;
+  settings: string;
+}
 
 export default function CookieBanner({ message, accept, reject, learnMore, settings }: CookieBannerProps) {
   const [visible, setVisible] = useState(false);
-  useEffect(() => { if (!getCookie(COOKIE_KEY)) setVisible(true); }, []);
+
+  useEffect(() => {
+    if (!getCookie(COOKIE_KEY)) setVisible(true);
+  }, []);
+
   useEffect(() => {
     const handler = () => setVisible(true);
     window.addEventListener("open-cookie-banner", handler);
     return () => window.removeEventListener("open-cookie-banner", handler);
   }, []);
-  function handleAccept() { setCookie(COOKIE_KEY, "accepted", COOKIE_DAYS); setVisible(false); }
-  function handleReject() { setCookie(COOKIE_KEY, "rejected", COOKIE_DAYS); setVisible(false); }
+
+  function handleAccept() {
+    setCookie(COOKIE_KEY, "accepted", COOKIE_DAYS);
+    setVisible(false);
+  }
+
+  function handleReject() {
+    setCookie(COOKIE_KEY, "rejected", COOKIE_DAYS);
+    setVisible(false);
+  }
+
   if (!visible) return null;
+
   return (
     <div className={styles.banner} role="dialog" aria-label={settings}>
       <div className={styles.inner}>
-        <p className={styles.message}>{message}{" "}<a href="/privacy" className={styles.link}>{learnMore}</a></p>
+        <p className={styles.message}>
+          {message}{" "}
+          <a href="/datenschutz" className={styles.link}>{learnMore}</a>
+        </p>
         <div className={styles.actions}>
           <button className={styles.reject} onClick={handleReject}>{reject}</button>
           <button className={styles.accept} onClick={handleAccept}>{accept}</button>
